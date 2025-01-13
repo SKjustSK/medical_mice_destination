@@ -1,3 +1,3 @@
-import HospitalSignUpPage from "@/components/hospital/HospitalSignUpPage";
+import HospitalSignUpPage2 from "@/components/hospital/HospitalSignUpPage";
 
-export default HospitalSignUpPage;
+export default HospitalSignUpPage2;

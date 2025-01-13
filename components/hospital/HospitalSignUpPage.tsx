@@ -1,105 +1,100 @@
 "use client"
 
-import NavBar from "../NavBar"
-import { Card, CardHeader, CardDescription, CardTitle } from "../ui/card"
-import { Progress } from "@/components/ui/progress"
-import Link from "next/link"
-import { useState } from "react"
+import { Button } from "../ui/button";
+import { useState } from "react";
+import BasicInfoComponent from "./BasicInfoComponent";
 
-// basic info and other stuff import
-function InfoCard({ title, stepNumber }) {
+const steps = [
+  { id: 0, title: "Basic Info", description: "Interesting description" },
+  { id: 1, title: "Media Upload", description: "Interesting description" },
+  { id: 2, title: "Facility Details", description: "Interesting description" },
+  { id: 3, title: "Legal Documents", description: "Interesting description" },
+  { id: 4, title: "Verification", description: "Interesting description" },
+];
+
+function StepButton({ title, description, handleClick }) {
   return (
-    <Link href="/">
-      <Card className="flex flex-col gap-4 p-10 w-full h-40 justify-center">
-        <div className="flex gap-8">
-          <div className="flex flex-col gap-2">
-            <div className="text-2xl font-bold">{title}</div>
-            <div className="text-slate-700">Step {stepNumber} of 5</div>
-          </div>
-        </div>
-        <div className="text-blue-600 text-lg font-bold">
-          Start now →
-        </div>
-      </Card>
-    </Link>
+    <button
+      onClick={handleClick}
+      className="focus:border-emerald-400 rounded-md flex text-start py-2 px-8 gap-4 border-2 h-18 text-lg border-gray-300"
+    >
+      <div className="bg-gray-500 rounded-full aspect-square h-full"></div>
+      <div className="flex-1">
+        <div className="font-bold">{title}</div>
+        <div className="text-base text-neutral-600">{description}</div>
+      </div>
+    </button>
   );
 }
 
-const steps = [
-  {
-    title: "Basic Info",
-  },
-  {
-    title: "Media Upload",
-  },
-  {
-    title: "Facility Details",
-  },
-  {
-    title: "Legal Documents",
-  },
-  {
-    title: "Verification",
-  },
-]
+// Components for each step
+function BasicInfo() {
+  return <div>Basic Info Component</div>;
+}
 
-function HospitalSignUp() {
+function MediaUpload() {
+  return <div>Media Upload Component</div>;
+}
 
-  let [stepCompletion, setstepCompletion] = useState({
-    "basicInfo": true,
-    "mediaUpload": false,
-    "facilityDetails": false,
-    "legalDocuments": false,
-    "verification": false,
-  });
+function FacilityDetails() {
+  return <div>Facility Details Component</div>;
+}
 
-  const checkStepsCompleted = (stepCompletion) => {
-    let stepsCompleted = 0;
-    for (let key in stepCompletion) {
-      if (stepCompletion[key]) {
-        stepsCompleted += 1;
-      }
+function LegalDocuments() {
+  return <div>Legal Documents Component</div>;
+}
+
+function Verification() {
+  return <div>Verification Component</div>;
+}
+
+// Main Component
+export default function HospitalSignUpPage2() {
+  const [selectedStep, setSelectedStep] = useState(0);
+
+  const renderForm = () => {
+    switch (selectedStep) {
+      case 0:
+        return <BasicInfoComponent />;
+      case 1:
+        return <MediaUpload />;
+      case 2:
+        return <FacilityDetails />;
+      case 3:
+        return <LegalDocuments />;
+      case 4:
+        return <Verification />;
+      default:
+        return <div>Select a step to continue</div>;
     }
-    return stepsCompleted
-  }
-  let stepsCompleted = checkStepsCompleted(stepCompletion)
-  let totalSteps = Object.keys(stepCompletion).length
-  let completionPercent = (stepsCompleted*100)/totalSteps
+  };
 
   return (
-    <div className="bg-slate-200 flex-col flex flex-1 px-36 gap-8 justify-center">
-      <div className="flex flex-col gap-2 ">
-        <div className="text-5xl font-bold">Welcome to Hospital Registration Portal</div>
-        <div className="text-xl">Complete the following steps to register your hospital</div>
-      </div>
-      <div className="grid grid-cols-3 gap-8 grid-flow-row">
-        {steps.map((step, index) => {
-          return (
-            <InfoCard key={index} title={step.title} stepNumber={index+1}/>
-          )
-        })}
-      </div>
-      <Card className="p-4">
-        <CardHeader className="text-2xl gap-2">
-          <CardTitle>Registration Progress</CardTitle>
-          <Progress className='[&>*]:bg-blue-500' value={completionPercent}/>
-          <CardDescription className="flex justify-between text-lg">
-            <div>{stepsCompleted} of {totalSteps} completed</div>
-            <div>{completionPercent}% complete</div>
-          </CardDescription>
-        </CardHeader>       
-      </Card>
-    </div>
-  )
-}
-
-function HospitalSignUpPage() {
-  return (
-    <main className="flex flex-col min-h-screen justify-start">
-      <NavBar />
-      <HospitalSignUp />
+    <main className="min-h-screen flex">
+      <section className="flex flex-col bg-zinc-100 gap-8 justify-center items-center w-1/3 m-4 rounded-md px-20">
+        <div className="flex flex-col justify-center gap-4 items-center text-center">
+          <div className="text-4xl font-bold">
+            Welcome to Hospital Registration Portal
+          </div>
+          <div className="text-lg text-neutral-700">
+            Complete the steps below to register your hospital
+          </div>
+        </div>
+        <div className="flex flex-col self-stretch gap-4">
+          {steps.map((step) => (
+            <StepButton
+              title={step.title}
+              description={step.description}
+              key={step.id}
+              handleClick={() => setSelectedStep(step.id)}
+            />
+          ))}
+        </div>
+        <Button className="w-2/6 text-base h-10">Submit</Button>
+      </section>
+      <section className="bg-white flex-1 border-red-200 rounded-md m-4 border-2">
+        {renderForm()}
+      </section>
     </main>
-  )
+  );
 }
-
-export default HospitalSignUpPage
