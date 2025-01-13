@@ -71,27 +71,30 @@ export default function HospitalSignUpPage2() {
 
   return (
     <main className="min-h-screen flex">
-      <section className="flex flex-col bg-zinc-100 gap-8 justify-center items-center w-1/3 m-4 rounded-md px-20">
-        <div className="flex flex-col justify-center gap-4 items-center text-center">
-          <div className="text-4xl font-bold">
-            Welcome to Hospital Registration Portal
+      <div className="h-screen sticky top-0 flex flex-col bg-white justify-center items-center w-1/3 p-4">
+        <section className="flex flex-col flex-1 bg-zinc-100 gap-8 justify-center items-center rounded-md px-20">
+          <div className="flex flex-col justify-center gap-4 items-center text-center">
+            <div className="text-4xl font-bold">
+              Welcome to Hospital Registration Portal
+            </div>
+            <div className="text-lg text-neutral-700">
+              Complete the steps below to register your hospital
+            </div>
           </div>
-          <div className="text-lg text-neutral-700">
-            Complete the steps below to register your hospital
+          <div className="flex flex-col self-stretch gap-4">
+            {steps.map((step) => (
+              <StepButton
+                title={step.title}
+                description={step.description}
+                key={step.id}
+                handleClick={() => setSelectedStep(step.id)}
+              />
+            ))}
           </div>
-        </div>
-        <div className="flex flex-col self-stretch gap-4">
-          {steps.map((step) => (
-            <StepButton
-              title={step.title}
-              description={step.description}
-              key={step.id}
-              handleClick={() => setSelectedStep(step.id)}
-            />
-          ))}
-        </div>
-        <Button className="w-2/6 text-base h-10">Submit</Button>
-      </section>
+          <Button className="w-2/6 text-base h-10">Submit</Button>
+        </section>
+      </div>
+
       <section className="bg-white flex-1 border-red-200 rounded-md m-4 border-2">
         {renderForm()}
       </section>
