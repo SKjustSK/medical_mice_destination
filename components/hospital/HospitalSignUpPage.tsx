@@ -1,79 +1,81 @@
-"use client"
+'use client'
 
-import { Button } from "../ui/button";
-import { useState } from "react";
-import BasicInfoComponent from "./BasicInfoComponent";
+import { Button } from '../ui/button'
+import { useState } from 'react'
+import BasicInfoComponent from './BasicInfoComponent'
 
 const steps = [
-  { id: 0, title: "Basic Info", description: "Interesting description" },
-  { id: 1, title: "Media Upload", description: "Interesting description" },
-  { id: 2, title: "Facility Details", description: "Interesting description" },
-  { id: 3, title: "Legal Documents", description: "Interesting description" },
-  { id: 4, title: "Verification", description: "Interesting description" },
-];
+  { id: 0, title: 'Basic Info', description: 'Interesting description' },
+  { id: 1, title: 'Media Upload', description: 'Interesting description' },
+  { id: 2, title: 'Facility Details', description: 'Interesting description' },
+  { id: 3, title: 'Legal Documents', description: 'Interesting description' },
+  { id: 4, title: 'Verification', description: 'Interesting description' },
+]
 
-function StepButton({ title, description, handleClick }) {
+function StepButton({ title, description, handleClick, stepNumber }) {
   return (
     <button
       onClick={handleClick}
-      className="focus:border-emerald-400 rounded-md flex text-start py-2 px-8 gap-4 border-2 h-18 text-lg border-gray-300"
+      className="border-box flex items-center gap-4 rounded-md border-2 border-transparent px-8 py-2  h-18 text-start text-lg focus:border-emerald-400"
     >
-      <div className="bg-gray-500 rounded-full aspect-square h-full"></div>
+      <div className="flex aspect-square h-5/6 items-center justify-center rounded-full bg-green-400">
+        <div>{stepNumber}</div>
+      </div>
       <div className="flex-1">
         <div className="font-bold">{title}</div>
         <div className="text-base text-neutral-600">{description}</div>
       </div>
     </button>
-  );
+  )
 }
 
 // Components for each step
 function BasicInfo() {
-  return <div>Basic Info Component</div>;
+  return <div>Basic Info Component</div>
 }
 
 function MediaUpload() {
-  return <div>Media Upload Component</div>;
+  return <div>Media Upload Component</div>
 }
 
 function FacilityDetails() {
-  return <div>Facility Details Component</div>;
+  return <div>Facility Details Component</div>
 }
 
 function LegalDocuments() {
-  return <div>Legal Documents Component</div>;
+  return <div>Legal Documents Component</div>
 }
 
 function Verification() {
-  return <div>Verification Component</div>;
+  return <div>Verification Component</div>
 }
 
 // Main Component
 export default function HospitalSignUpPage2() {
-  const [selectedStep, setSelectedStep] = useState(0);
+  const [selectedStep, setSelectedStep] = useState(0)
 
   const renderForm = () => {
     switch (selectedStep) {
       case 0:
-        return <BasicInfoComponent />;
+        return <BasicInfoComponent />
       case 1:
-        return <MediaUpload />;
+        return <MediaUpload />
       case 2:
-        return <FacilityDetails />;
+        return <FacilityDetails />
       case 3:
-        return <LegalDocuments />;
+        return <LegalDocuments />
       case 4:
-        return <Verification />;
+        return <Verification />
       default:
-        return <div>Select a step to continue</div>;
+        return <div>Select a step to continue</div>
     }
-  };
+  }
 
   return (
-    <main className="min-h-screen flex">
-      <div className="h-screen sticky top-0 flex flex-col bg-white justify-center items-center w-1/3 p-4">
-        <section className="flex flex-col flex-1 bg-zinc-100 gap-8 justify-center items-center rounded-md px-20">
-          <div className="flex flex-col justify-center gap-4 items-center text-center">
+    <main className="flex min-h-screen">
+      <div className="sticky top-0 flex h-screen w-1/3 flex-col items-center justify-center bg-white p-4">
+        <section className="flex flex-1 flex-col items-center justify-center gap-8 rounded-md bg-zinc-100 px-20">
+          <div className="flex flex-col items-center justify-center gap-4 text-center">
             <div className="text-4xl font-bold">
               Welcome to Hospital Registration Portal
             </div>
@@ -81,23 +83,24 @@ export default function HospitalSignUpPage2() {
               Complete the steps below to register your hospital
             </div>
           </div>
-          <div className="flex flex-col self-stretch gap-4">
+          <div className="flex flex-col gap-4 self-stretch">
             {steps.map((step) => (
               <StepButton
                 title={step.title}
                 description={step.description}
                 key={step.id}
                 handleClick={() => setSelectedStep(step.id)}
+                stepNumber={step.id + 1}
               />
             ))}
           </div>
-          <Button className="w-2/6 text-base h-10">Submit</Button>
+          <Button className="h-10 w-2/6 text-base">Submit</Button>
         </section>
       </div>
 
-      <section className="bg-white flex-1 border-red-200 rounded-md m-4 border-2">
+      <section className="m-4 flex-1 rounded-md border-2 border-red-200 bg-white">
         {renderForm()}
       </section>
     </main>
-  );
+  )
 }
